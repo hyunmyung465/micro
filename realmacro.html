@@ -41,8 +41,13 @@
                     </button>
                 </div>
                 <div class="col-md-4" style="float: left;">
-                    <button id="others" type="button" class="btn btn-default" style="display: inline-block;">
-                        OTHERS
+                    <button id="sendinga" type="button" class="btn btn-default" style="display: inline-block;">
+                        sendinga
+                    </button>
+                </div>
+                <div class="col-md-4" style="float: left;">
+                    <button id="name" type="button" class="btn btn-default" style="display: inline-block;">
+                        name
                     </button>
                 </div>
                 <div class="col-md-4" style="float: left;">
@@ -155,7 +160,7 @@
                     console.log(txHash)
                 }
             }
-            others.onclick = async function () {
+            sendinga.onclick = async function () {
                 console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 console.log('wallet address: ' + address.value)
@@ -181,6 +186,13 @@
                     var txHash = await iconService.sendTransaction(signedTransaction).execute();
                     console.log(txHash)
                 }
+            }    
+            name.onclick = async function () {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                console.log('wallet address: ' + address.value)
+                var wallet = IconWallet.loadPrivateKey(ppk.value);
+                var num = 1
                 for (var i = 0; i < count.value; i++) {
                     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder()
                     var callTransactionData = callTransactionBuilder
@@ -201,6 +213,7 @@
                     var txHash = await iconService.sendTransaction(signedTransaction).execute();
                     console.log(txHash)
                 }
+                
             }
             bear.onclick = async function () {
                 console.log('before builder ')
