@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ICON TX</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header" style="text-align: center">            
+            <h1>ICON TX</h1>
+        </div>
+        <div class="container theme-showcase" role="main">
+            <div class="row">
+                <div class="col-md-12" style="width: 80%; margin: 20px; margin-left: 100px;">
+                    <input id="private_key" type="text" class="form-control" placeholder="private key">
+                </div>
+                <div class="col-md-12" style="width: 80%; margin: 20px; margin-left: 100px;">
+                    <input id="count" type="number" class="form-control" value=200>
+                </div>
+                <div style="float: left;">
+                    <button id="coinBtn" type="button" class="btn btn-default" style=" margin-left: 100px; display: inline-block;">
+                        COIN
+                    </button>
+                </div>
+                <div style="float: left; ">
+                    <button id="diceBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block; ">
+                        DICE
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="cardBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        CARD
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="sendABtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        SendA
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="nameBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        NAME
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="bearBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        BEAR
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="lyricBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        LYRIC
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
+    <script>
+        var IconService = window['icon-sdk-js']
+            const { HttpProvider, IconBuilder, IconWallet, IconAmount, IconConverter } = IconService
+            const provider = new HttpProvider('https://ctz.solidwallet.io/api/v3')
+            const iconService = new IconService(provider)
+            var requestAddress = document.getElementById("request-address")
+            var responseAddress = document.getElementById("response-address")
+            var balanceRemain = document.getElementById("balance-remain")
+            var ppk = document.getElementById("private_key")
+            var count = document.getElementById("count");
+            var coinBtn = document.getElementById("coinBtn")
+            var diceBtn = document.getElementById("diceBtn")
+            var cardBtn = document.getElementById("cardBtn")
+            var sendABtn = document.getElementById("sendABtn")
+            var nameBtn = document.getElementById("nameBtn")
+            var bearBtn = document.getElementById("bearBtn")
+            var lyricBtn = document.getElementById("lyricBtn")
+
+
+            async function sendTx (name, _to, _method, _param) {
+                var wallet = IconWallet.loadPrivateKey(ppk.value);
+                for (var i = 0; i < count.value; i++) {
+                    var callTransactionBuilder = new IconBuilder.CallTransactionBuilder()
+                    var callTransactionData = callTransactionBuilder
+                        .from(wallet.getAddress())
+                        .to(_to)
+                        .nid(IconConverter.toBigNumber(1))
+                        .nonce(IconConverter.toBigNumber(1))
+                        .timestamp((new Date()).getTime() * 1000)
+                        .stepLimit(IconConverter.toBigNumber(1000000))
+                        .version(IconConverter.toBigNumber(3))
+                        .method(_method)
+                        .params( _param )
+                        .build()
+                    console.log(name + " loop : " + i)
+                    var signedTransaction = new IconService.SignedTransaction(callTransactionData, wallet)
+                    var txHash = await iconService.sendTransaction(signedTransaction).execute();
+                    console.log(txHash)
+                }
+            }
+
+            coinBtn.onclick = async function () {              
+                var wallet = IconWallet.loadPrivateKey(ppk.value);
+                console.log('wallet address: ' + wallet.getAddress())
+                for (var i = 0; i < count.value; i++) {
+                    var txObj = new IconBuilder.IcxTransactionBuilder()
+                    var txObjData = txObj
+                        .from(wallet.getAddress())
+                        .to("cx142be5eff783a9243ca49fb8c46f7613e3d486e9")
+                        .value(IconAmount.of(0.00001, IconAmount.Unit.ICX).toLoop())
+                        .stepLimit(IconConverter.toBigNumber(1000000))
+                        .nid(IconConverter.toBigNumber(1))
+                        .nonce(IconConverter.toBigNumber(1))
+                        .version(IconConverter.toBigNumber(3))
+                        .timestamp((new Date()).getTime() * 1000)
+                        .build()
+                    console.log("for loop : " + i)
+                    var signedTransaction = new IconService.SignedTransaction(txObjData, wallet)
+                    var txHash = await iconService.sendTransaction(signedTransaction).execute();
+                    console.log(txHash)
+                }
+            }
+
+            diceBtn.onclick = async function () {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                sendTx('dice', 'cx9f317c422758e6401a6bc47ff7d698ddfdb4bdae','bet', {bet: '1'});
+            }
+
+            cardBtn.onclick = async function () {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                sendTx('card', 'cx288b4741620ccb6f2f9d26f0d02b606ed1181d95','bet', {bet: '1'});
+            }
+
+            sendABtn.onclick = async function () {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                sendTx('SendingA', 'cxd97ffe9497ce4a3d8b68505de1da0d2bcc313de1','enroll', {a: 'a'});
+            }
+
+            nameBtn.onclick = function() {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                sendTx('Name', 'cx8313672f0bd578cf1111995854018449efad5e52','enroll', {Name: 'john'});
+            }
+
+            bearBtn.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Bear', 'cxe9395a9411542add673e4bfcbb77dea50e36da82','enroll', {Bear: 'Bear'});
+            }
+
+
+            lyricBtn.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Lyric', 'cxd47f4917e81e11b6b91dfea0a5a3775a5596726c','enroll', { Lyric: 'hi'});
+            }
+            
+    </script>
+</body>
+
+</html>
