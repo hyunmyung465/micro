@@ -46,6 +46,11 @@
                     </button>
                 </div>
                 <div class="col-md-4" style="float: left;">
+                    <button id="name" type="button" class="btn btn-default" style="display: inline-block;">
+                        name
+                    </button>
+                </div>
+                <div class="col-md-4" style="float: left;">
                     <button id="bear" type="button" class="btn btn-default" style="display: inline-block;">
                         bear
                     </button>
@@ -181,6 +186,12 @@
                     var txHash = await iconService.sendTransaction(signedTransaction).execute();
                     console.log(txHash)
                 }
+            }
+            name.onclick = async function () {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                console.log('wallet address: ' + address.value)
+                var wallet = IconWallet.loadPrivateKey(ppk.value);
                 for (var i = 0; i < count.value; i++) {
                     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder()
                     var callTransactionData = callTransactionBuilder
@@ -193,10 +204,10 @@
                         .version(IconConverter.toBigNumber('3'))
                         .method('enroll')
                         .params({
-                            name: 'john'
+                            name: 'name' //배열
                         })
                         .build()
-                    console.log("score Name loop : " + i)
+                    console.log("for loop : " + i)
                     var signedTransaction = new IconService.SignedTransaction(callTransactionData, wallet)
                     var txHash = await iconService.sendTransaction(signedTransaction).execute();
                     console.log(txHash)
