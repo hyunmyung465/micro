@@ -41,17 +41,7 @@
                     <button id="sendABtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
                         SendA
                     </button>
-                </div>
-                <div style="float: left;">
-                    <button id="nameBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        NAME
-                    </button>
-                </div>
-                <div style="float: left;">
-                    <button id="bearBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        BEAR
-                    </button>
-                </div>
+                </div>          
                 <div style="float: left;">
                     <button id="lyricBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
                         LYRIC
@@ -142,18 +132,6 @@
                 console.log('private key: ' + ppk.value)
                 sendTx('SendingA', 'cxd97ffe9497ce4a3d8b68505de1da0d2bcc313de1','enroll', {a: 'a'});
             }
-
-            nameBtn.onclick = function() {
-                console.log('before builder ')
-                console.log('private key: ' + ppk.value)
-                sendTx('Name', 'cx8313672f0bd578cf1111995854018449efad5e52','enroll', {Name: 'john'});
-            }
-
-            bearBtn.onclick = function () {
-                console.log('private key: ' + ppk.value)
-                sendTx('Bear', 'cxe9395a9411542add673e4bfcbb77dea50e36da82','enroll', {Bear: 'Bear'});
-            }
-
 
             lyricBtn.onclick = function () {
                 console.log('private key: ' + ppk.value)
