@@ -41,7 +41,17 @@
                     <button id="sendABtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
                         SendA
                     </button>
-                </div>          
+                </div>
+                <div style="float: left;">
+                    <button id="nameBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        NAME
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="bearBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        BEAR
+                    </button>
+                </div>
                 <div style="float: left;">
                     <button id="lyricBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
                         LYRIC
@@ -69,8 +79,6 @@
             var nameBtn = document.getElementById("nameBtn")
             var bearBtn = document.getElementById("bearBtn")
             var lyricBtn = document.getElementById("lyricBtn")
-
-
             async function sendTx (name, _to, _method, _param) {
                 var wallet = IconWallet.loadPrivateKey(ppk.value);
                 for (var i = 0; i < count.value; i++) {
@@ -92,7 +100,6 @@
                     console.log(txHash)
                 }
             }
-
             coinBtn.onclick = async function () {              
                 var wallet = IconWallet.loadPrivateKey(ppk.value);
                 console.log('wallet address: ' + wallet.getAddress())
@@ -114,25 +121,30 @@
                     console.log(txHash)
                 }
             }
-
             diceBtn.onclick = async function () {
                 console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 sendTx('dice', 'cx9f317c422758e6401a6bc47ff7d698ddfdb4bdae','bet', {bet: '1'});
             }
-
             cardBtn.onclick = async function () {
                 console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 sendTx('card', 'cx288b4741620ccb6f2f9d26f0d02b606ed1181d95','bet', {bet: '1'});
             }
-
             sendABtn.onclick = async function () {
                 console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 sendTx('SendingA', 'cxd97ffe9497ce4a3d8b68505de1da0d2bcc313de1','enroll', {a: 'a'});
             }
-
+            nameBtn.onclick = function() {
+                console.log('before builder ')
+                console.log('private key: ' + ppk.value)
+                sendTx('Name', 'cx8313672f0bd578cf1111995854018449efad5e52','enroll', {Name: 'john'});
+            }
+            bearBtn.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Bear', 'cxe9395a9411542add673e4bfcbb77dea50e36da82','enroll', {Bear: 'Bear'});
+            }
             lyricBtn.onclick = function () {
                 console.log('private key: ' + ppk.value)
                 sendTx('Lyric', 'cxd47f4917e81e11b6b91dfea0a5a3775a5596726c','enroll', { Lyric: 'hi'});
