@@ -16,14 +16,16 @@
         </div>
         <div class="container theme-showcase" role="main">
             <div class="row">
-                <div class="col-md-12" style="width: 80%; margin: 20px; margin-left: 100px;">
+                <div class="col-md-12" style="width: 80%; margin: 20px; margin-left: 30px;">
                     <input id="private_key" type="text" class="form-control" placeholder="private key">
                 </div>
-                <div class="col-md-12" style="width: 80%; margin: 20px; margin-left: 100px;">
+                <div class="col-md-12" style="width: 80%; margin: 10px; margin-left: 30px;margin-bottom: 40px;">
                     <input id="count" type="number" class="form-control" value=200>
                 </div>
+            </div>
+            <div class="row">
                 <div style="float: left;">
-                    <button id="coinBtn" type="button" class="btn btn-default" style=" margin-left: 100px; display: inline-block;">
+                    <button id="coinBtn" type="button" class="btn btn-default" style="margin-left: 50px; margin-bottom: 10px; display: inline-block;">
                         COIN
                     </button>
                 </div>
@@ -43,18 +45,45 @@
                     </button>
                 </div>
                 <div style="float: left;">
+                    <button id="lyricBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        LYRIC
+                    </button>
+                </div>
+                <div style="float: left;">
                     <button id="nameBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
                         NAME
                     </button>
                 </div>
+            </div>
+            <div class="row">
                 <div style="float: left;">
-                    <button id="bearBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        BEAR
+                    <button id="apple" type="button" class="btn btn-default" style="margin-left: 50px; display: inline-block;">
+                        APPLE
                     </button>
                 </div>
                 <div style="float: left;">
-                    <button id="lyricBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        LYRIC
+                    <button id="hate" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        HATE
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="hungry" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        HUNGRY
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="cookie" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        COOKIE
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="nike" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        NIKE
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="best" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        B.F
                     </button>
                 </div>
             </div>
@@ -72,13 +101,7 @@
             var balanceRemain = document.getElementById("balance-remain")
             var ppk = document.getElementById("private_key")
             var count = document.getElementById("count");
-            var coinBtn = document.getElementById("coinBtn")
-            var diceBtn = document.getElementById("diceBtn")
-            var cardBtn = document.getElementById("cardBtn")
-            var sendABtn = document.getElementById("sendABtn")
-            var nameBtn = document.getElementById("nameBtn")
-            var bearBtn = document.getElementById("bearBtn")
-            var lyricBtn = document.getElementById("lyricBtn")
+
             async function sendTx (name, _to, _method, _param) {
                 var wallet = IconWallet.loadPrivateKey(ppk.value);
                 for (var i = 0; i < count.value; i++) {
@@ -100,6 +123,7 @@
                     console.log(txHash)
                 }
             }
+
             coinBtn.onclick = async function () {              
                 var wallet = IconWallet.loadPrivateKey(ppk.value);
                 console.log('wallet address: ' + wallet.getAddress())
@@ -121,33 +145,60 @@
                     console.log(txHash)
                 }
             }
+
             diceBtn.onclick = async function () {
-                console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 sendTx('dice', 'cx9f317c422758e6401a6bc47ff7d698ddfdb4bdae','bet', {bet: '1'});
             }
+
             cardBtn.onclick = async function () {
-                console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 sendTx('card', 'cx288b4741620ccb6f2f9d26f0d02b606ed1181d95','bet', {bet: '1'});
             }
+
             sendABtn.onclick = async function () {
-                console.log('before builder ')
                 console.log('private key: ' + ppk.value)
                 sendTx('SendingA', 'cxd97ffe9497ce4a3d8b68505de1da0d2bcc313de1','enroll', {a: 'a'});
             }
-            nameBtn.onclick = function() {
-                console.log('before builder ')
-                console.log('private key: ' + ppk.value)
-                sendTx('Name', 'cx8313672f0bd578cf1111995854018449efad5e52','enroll', {Name: 'john'});
-            }
-            bearBtn.onclick = function () {
-                console.log('private key: ' + ppk.value)
-                sendTx('Bear', 'cxe9395a9411542add673e4bfcbb77dea50e36da82','enroll', {Bear: 'Bear'});
-            }
+
             lyricBtn.onclick = function () {
                 console.log('private key: ' + ppk.value)
                 sendTx('Lyric', 'cxd47f4917e81e11b6b91dfea0a5a3775a5596726c','enroll', { Lyric: 'hi'});
+            }
+
+            apple.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Apple', 'cxbb70b0d10ba253c95e276bd3b65ea140d639c583','enroll', { Apple: 'apple'});
+            }
+
+            hate.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Hate', 'cxb8fd8c1400b1aa60a9a8e5bd9d9b2462251a6f6f','enroll', { Hateyou: 'icon'});
+            }
+            
+            hungry.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Hungry', 'cx53740a586816f7d3e1a22d5de885927a1c314daf','enroll', { Hungry: 'pizza'});
+            }
+
+            cookie.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Cookie', 'cx780dd888bbfaa78f811fab20fbab241781b4e437','enroll', { Cookie: 'coogie'});
+            }
+
+            nike.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Nike', 'cxe48c767f6c9748bdeb3f1a3884b29e1e8b0bdb17','enroll', { Nike: 'nike'});
+            }
+
+            nameBtn.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('Nike', 'cx8313672f0bd578cf1111995854018449efad5e52','enroll', { Name: 'aa'});
+            }
+
+            best.onclick = function () {
+                console.log('private key: ' + ppk.value)
+                sendTx('best friend', 'cx2c10dd97649157729a9c9d5f20d854b74984699e','write_letter', { friend_msg: 'hello'});
             }
             
     </script>
