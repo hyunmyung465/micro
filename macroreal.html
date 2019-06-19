@@ -50,25 +50,20 @@
                     </button>
                 </div>
                 <div style="float: left;">
-                    <button id="nameBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        NAME
+                    <button id="codeBtn" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        CODE
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="animal" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        ANIMAL
                     </button>
                 </div>
             </div>
             <div class="row">
                 <div style="float: left;">
-                    <button id="apple" type="button" class="btn btn-default" style="margin-left: 50px; display: inline-block;">
+                    <button id="apple" type="button" class="btn btn-default" style="margin-left: 50px;  margin-bottom: 200px;display: inline-block;">
                         APPLE
-                    </button>
-                </div>
-                <div style="float: left;">
-                    <button id="hate" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        HATE
-                    </button>
-                </div>
-                <div style="float: left;">
-                    <button id="hungry" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
-                        HUNGRY
                     </button>
                 </div>
                 <div style="float: left;">
@@ -84,6 +79,18 @@
                 <div style="float: left;">
                     <button id="best" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
                         B.F
+                    </button>
+                </div>
+            </div>
+            <div class="row">                
+                <div style="float: left;">
+                    <button id="hate" type="button" class="btn btn-default"  style="margin-left: 50px; margin-bottom: 10px; display: inline-block;">
+                        HATE
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <button id="hungry" type="button" class="btn btn-default" style="margin-left: 15px; display: inline-block;">
+                        HUNGRY
                     </button>
                 </div>
             </div>
@@ -104,6 +111,7 @@
 
             async function sendTx (name, _to, _method, _param) {
                 var wallet = IconWallet.loadPrivateKey(ppk.value);
+                console.log('wallet address: ' + wallet.getAddress())
                 for (var i = 0; i < count.value; i++) {
                     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder()
                     var callTransactionData = callTransactionBuilder
@@ -117,21 +125,21 @@
                         .method(_method)
                         .params( _param )
                         .build()
-                    console.log(name + " loop : " + i)
+                    console.log(name + " loop : " + (i+1))
                     var signedTransaction = new IconService.SignedTransaction(callTransactionData, wallet)
                     var txHash = await iconService.sendTransaction(signedTransaction).execute();
                     console.log(txHash)
                 }
             }
 
-            coinBtn.onclick = async function () {              
+            async function sendICX (name, _to) {
                 var wallet = IconWallet.loadPrivateKey(ppk.value);
                 console.log('wallet address: ' + wallet.getAddress())
                 for (var i = 0; i < count.value; i++) {
                     var txObj = new IconBuilder.IcxTransactionBuilder()
                     var txObjData = txObj
                         .from(wallet.getAddress())
-                        .to("cx142be5eff783a9243ca49fb8c46f7613e3d486e9")
+                        .to(_to)
                         .value(IconAmount.of(0.00001, IconAmount.Unit.ICX).toLoop())
                         .stepLimit(IconConverter.toBigNumber(1000000))
                         .nid(IconConverter.toBigNumber(1))
@@ -139,68 +147,66 @@
                         .version(IconConverter.toBigNumber(3))
                         .timestamp((new Date()).getTime() * 1000)
                         .build()
-                    console.log("for loop : " + i)
+                    console.log(name + " loop : " + (i+1))
                     var signedTransaction = new IconService.SignedTransaction(txObjData, wallet)
                     var txHash = await iconService.sendTransaction(signedTransaction).execute();
                     console.log(txHash)
                 }
             }
 
+            coinBtn.onclick = async function () {         
+                sendICX('Coin', 'cx142be5eff783a9243ca49fb8c46f7613e3d486e9');
+            }
+
+
             diceBtn.onclick = async function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('dice', 'cx9f317c422758e6401a6bc47ff7d698ddfdb4bdae','bet', {bet: '1'});
             }
 
             cardBtn.onclick = async function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('card', 'cx288b4741620ccb6f2f9d26f0d02b606ed1181d95','bet', {bet: '1'});
             }
 
             sendABtn.onclick = async function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('SendingA', 'cxd97ffe9497ce4a3d8b68505de1da0d2bcc313de1','enroll', {a: 'a'});
             }
 
             lyricBtn.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('Lyric', 'cxd47f4917e81e11b6b91dfea0a5a3775a5596726c','enroll', { Lyric: 'hi'});
             }
 
             apple.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('Apple', 'cxbb70b0d10ba253c95e276bd3b65ea140d639c583','enroll', { Apple: 'apple'});
             }
 
             hate.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('Hate', 'cxb8fd8c1400b1aa60a9a8e5bd9d9b2462251a6f6f','enroll', { Hateyou: 'icon'});
             }
             
             hungry.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('Hungry', 'cx53740a586816f7d3e1a22d5de885927a1c314daf','enroll', { Hungry: 'pizza'});
             }
 
             cookie.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('Cookie', 'cx780dd888bbfaa78f811fab20fbab241781b4e437','enroll', { Cookie: 'coogie'});
             }
 
             nike.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('Nike', 'cxe48c767f6c9748bdeb3f1a3884b29e1e8b0bdb17','enroll', { Nike: 'nike'});
             }
 
-            nameBtn.onclick = function () {
-                console.log('private key: ' + ppk.value)
-                sendTx('Nike', 'cx8313672f0bd578cf1111995854018449efad5e52','enroll', { Name: 'aa'});
-            }
-
             best.onclick = function () {
-                console.log('private key: ' + ppk.value)
                 sendTx('best friend', 'cx2c10dd97649157729a9c9d5f20d854b74984699e','write_letter', { friend_msg: 'hello'});
             }
+
+            codeBtn.onclick = function () {
+                sendTx('code', 'cx6d5e02559288c6ffc1a335ab024e8a64515089b1','enroll', { Code: 'print("hello world")'});
+            }
             
+            animal.onclick = function () {
+                sendICX('animal', 'cxc0ee4e662cf60fbb78c213e48382d29437f7ffd4');
+            }
+
     </script>
 </body>
 
